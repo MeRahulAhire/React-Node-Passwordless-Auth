@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.top{
+    height: 15vh;
+    font-family: 'Staatliches', cursive;
+    text-align: center;
+    color: #009688;
+    background-color: #1a1a1a;
+    font-size: 3rem;
+    display: grid;
+    place-items: center;
+
+}
+.bottom{
+ height: 85vh;
+ background-color: #272c34;
+ width: 100%;
+
+}
+.card{
+    margin: auto;
+    height: 400px;
+    width: 500px;
+    background-image: url('../../img/home.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.logout{
+    width: 200px;
+    height: 50px;
+    font-size: 2rem;
+    background-color: #ba000d;
+    outline: none;
+    border: none;
+    color: white;
+    float: right;
+    cursor: pointer;
+}
+.logout:hover{
+    background-color: red;
+}
+.words{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+}

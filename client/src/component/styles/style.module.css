@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    
+}
+
+.background{
+    height: 100vh;
+    width: 100%;
+    background-image: url('../../img/abstract background.webp');
+    /* background-image: linear-gradient(135deg, #1e88e5, #0d47a1); */
+    display: grid;
+    place-items: center;
+}
+
+.container{
+    height: 400px;
+    width: 400px;
+    /* background-image: linear-gradient(135deg, #1e88e5, #0d47a1); */
+    background-color: #f7f7f7;
+    border-radius: 15px;
+
+}
+
+.heading{
+    font-family: 'Staatliches', cursive;
+    text-align: center;
+    color: #009688;
+    font-size: 3rem;
+    margin-top: 1rem;
+}
+.input_container{
+    display: grid;
+    place-items: center;
+    
+}
+.input_text{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    margin-top: 4rem;
+    margin-left: 17px;
+    
+}
+.input{
+    width: 90%;
+    height: 40px;
+    font-size: 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    border: 2px solid black;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    background-color: none;
+}
+
+.submit {
+    margin-right: 17px;
+    background-color: #000;
+    height: 40px;
+    width: 100px;
+    margin-top: 1rem;
+    border: 0px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 20px;
+    float: right;
+    outline: none;
+    cursor: pointer;
+}
+.back {
+    margin-left: 17px;
+    background-color: red;
+    height: 40px;
+    width: 100px;
+    margin-top: 1rem;
+    border: 0px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 20px;
+    float: left;
+    outline: none;
+    cursor: pointer;
+}
+.submit:hover{
+    background-color: #1976d2;
+}
+
+.error{
+    color: red;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.success{
+    color: green;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
