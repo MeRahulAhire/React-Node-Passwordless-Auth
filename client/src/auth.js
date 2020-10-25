@@ -2,28 +2,25 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-class Auth {
-	// accessToken = cookies.get('accessToken');
-	// refreshToken = cookies.get('refreshToken');
-	constructor() {
-		this.authenticated = false;
-	}
-
-	login() {
-		const accessToken = cookies.get('accessToken');
-        const refreshToken = cookies.get('refreshToken');
-
-		if (!accessToken && !refreshToken) {
+	class Auth {
+		constructor() {
 			this.authenticated = false;
 		}
-		if (accessToken && refreshToken) {
-			this.authenticated = true;
+		
+		isAuthenticated() {
+			const accessToken = cookies.get('accessToken');
+			const refreshToken = cookies.get('refreshToken');
+		if (!accessToken && !refreshToken) {
+			return this.authenticated = false;
 		}
-		if (!accessToken && refreshToken) {
-            const refreshToken = cookies.get('refreshToken');
+		if (accessToken && refreshToken) {
+			return this.authenticated = true;
+		}
+		if (!accessToken) {
+           
 			axios
-				.post('http://localhost:8888/home', {
-					refreshToken
+				.post('http://localhost:8888/refresh', {
+					refreshToken: refreshToken
 				})
 				.then(function(res) {
 					console.log(res.data);
@@ -33,61 +30,15 @@ class Auth {
 						expires: new Date(new Date().getTime() + 30 * 1000),
 						sameSite: 'strict'
 					});
-					this.authenticated = true;
+					window.location.reload()
+					
 				})
 				.catch(function(error) {
 					console.log(error.response);
 				});
 		}
-
-	}
-
-	isAuthenticated() {
-		return this.login;
+		
 	}
 }
+
 export default new Auth();
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import Cookies from 'universal-cookie';
-// const cookies = new Cookies();
-
-// function auth() {
-// 	const [ authState, setAuthState ] = useState({auth: false});
-// 	// useEffect(() => {
-// 	const accessToken = cookies.get('accessToken');
-// 	const refreshToken = cookies.get('refreshToken');
-
-// 	if (!accessToken && !refreshToken) {
-// 		setAuthState({...authState, auth: false });
-// 	}
-// 	if (accessToken && refreshToken) {
-// 		setAuthState({ ...authState, auth: true });
-// 	}
-// 	if (!accessToken && refreshToken) {
-// 		axios
-// 			.post('http://localhost:8888/home', {
-// 				refreshToken
-// 			})
-// 			.then(function(res) {
-// 				console.log(res.data);
-// 				const { accessToken } = res.data;
-
-// 				cookies.set('accessToken', accessToken, {
-// 					expires: new Date(new Date().getTime() + 30 * 1000),
-// 					sameSite: 'strict'
-// 				});
-// 				setAuthState({ ...authState, auth: true  });
-// 			})
-// 			.catch(function(error) {
-// 				console.log(error.response);
-// 			});
-// 	}
-// 	return authState.auth
-	
-// 	// });
-// }
-
-
-// export default auth

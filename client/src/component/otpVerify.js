@@ -43,34 +43,7 @@ function OtpVerify(props) {
 				setError({ ...error, error: error.response.data.msg });
 			});
 	};
-	const refreshToken = () => {
-		console.log('click');
-		const refreshToken = cookies.get('refreshToken');
-		const config = {
-			headers: { 'Content-Type': 'application/json' },
-			withCredentials: true
-		};
-		axios
-			.post(
-				'http://localhost:8888/home',
-				{
-					refreshToken: refreshToken
-				},
-				// config
-			)
-			.then(function(res) {
-				console.log(res);
-				const { accessToken } = res.data;
-
-				cookies.set('accessToken', accessToken, {
-					expires: new Date(new Date().getTime() + 30 * 1000),
-					sameSite: 'strict'
-				});
-			})
-			.catch(function(error) {
-				console.log(error.response);
-			});
-	};
+	
 	return (
 		<div className={styles}>
 			<div className={styles.background}>
@@ -94,7 +67,7 @@ function OtpVerify(props) {
 					<button onClick={confirmOtp} className={styles.submit}>
 						Confirm OTP
 					</button>
-					<button onClick={refreshToken}> Refresh Token </button>
+					
 				</div>
 			</div>
 		</div>

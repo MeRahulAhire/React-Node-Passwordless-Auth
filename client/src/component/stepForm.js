@@ -8,7 +8,7 @@ const StepForm = () => {
 		otp: ''
 	});
 
-	const [step, setStep] = useState(2)
+	const [step, setStep] = useState(1)
 	
 	const handleChange = (input) => (e) => {
 		setState({...state, [input]: e.target.value });
