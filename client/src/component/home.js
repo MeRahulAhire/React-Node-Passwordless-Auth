@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './styles/home.module.css';
-import Cookies from 'universal-cookie';
-function home() {
-	const cookies = new Cookies();
+
+axios.defaults.withCredentials = true;
+function Home() {
+	const [ state, setstate ] = useState();
+	useEffect(() => {
+		axios
+			.post('http://localhost:8888/home', {
+				withCredentials: true,
+			})
+			.then(function(res) {
+				console.log(res.data)
+				
+			})
+			.catch(function(error) {
+				console.log(error.response);
+			});
+	})
+
 	const logout = () => {
-		cookies.remove('accessToken');
-		cookies.remove('refreshToken');
-		window.location.reload()
+		axios
+			.get('http://localhost:8888/logout')
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err.response);
+			});
+		window.location.reload();
 	};
 	return (
 		<div className={styles}>
@@ -25,4 +47,4 @@ function home() {
 	);
 }
 
-export default home;
+export default Home;

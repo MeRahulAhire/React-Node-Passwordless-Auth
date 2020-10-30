@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import styles from './styles/style.module.css';
 import axios from 'axios';
 // import { Redirect } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
 function OtpVerify(props) {
-	const cookies = new Cookies();
+	axios.defaults.withCredentials = true;
+	// const cookies = new Cookies();
 
 	const [ error, setError ] = useState({
 		error: '',
@@ -21,21 +22,22 @@ function OtpVerify(props) {
 			.post('http://localhost:8888/verifyOTP', {
 				phone: `${value.phone}`,
 				hash: `${value.hash}`,
-				otp: `${value.otp}`
+				otp: `${value.otp}`,
+				withCredentials: true
 			})
 			.then(function(res) {
 				console.log(res.data);
-				const { accessToken, refreshToken } = res.data;
+				// const { accessToken, refreshToken } = res.data;
 
-				cookies.set('accessToken', accessToken, {
-					expires: new Date(new Date().getTime() + 30 * 1000),
-					sameSite: 'strict'
-				});
-				cookies.set('refreshToken', refreshToken, {
-					expires: new Date(new Date().getTime() + 31557600000),
-					sameSite: 'strict'
-				});
-				window.location.reload();
+				// cookies.set('accessToken', accessToken, {
+				// 	expires: new Date(new Date().getTime() + 30 * 1000),
+				// 	sameSite: 'strict'
+				// });
+				// cookies.set('refreshToken', refreshToken, {
+				// 	expires: new Date(new Date().getTime() + 31557600000),
+				// 	sameSite: 'strict'
+				// });
+				// window.location.reload();
 				// setError({...error, success:res.data.msg})
 			})
 			.catch(function(error) {
@@ -43,7 +45,6 @@ function OtpVerify(props) {
 				setError({ ...error, error: error.response.data.msg });
 			});
 	};
-	
 	return (
 		<div className={styles}>
 			<div className={styles.background}>
@@ -67,7 +68,6 @@ function OtpVerify(props) {
 					<button onClick={confirmOtp} className={styles.submit}>
 						Confirm OTP
 					</button>
-					
 				</div>
 			</div>
 		</div>

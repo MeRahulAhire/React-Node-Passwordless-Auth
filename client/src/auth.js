@@ -2,25 +2,27 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-	class Auth {
-		constructor() {
-			this.authenticated = false;
-		}
-		
-		isAuthenticated() {
-			const accessToken = cookies.get('accessToken');
-			const refreshToken = cookies.get('refreshToken');
+axios.defaults.withCredentials = true;
+class Auth {
+	constructor() {
+		this.authenticated = false;
+	}
+
+	isAuthenticated() {
+		const accessToken = cookies.get('authSession');
+		const refreshToken = cookies.get('refreshTokenID');
 		if (!accessToken && !refreshToken) {
-			return this.authenticated = false;
+			return (this.authenticated = false);
 		}
 		if (accessToken && refreshToken) {
-			return this.authenticated = true;
+			return (this.authenticated = true);
 		}
-		if (!accessToken) {
-           
+		if (!accessToken && refreshToken) {
 			axios
 				.post('http://localhost:8888/refresh', {
-					refreshToken: refreshToken
+					withCredentials: true,
+					'phone':789456
+					// credentials: 'include'
 				})
 				.then(function(res) {
 					console.log(res.data);
@@ -30,14 +32,12 @@ const cookies = new Cookies();
 						expires: new Date(new Date().getTime() + 30 * 1000),
 						sameSite: 'strict'
 					});
-					window.location.reload()
-					
+					window.location.reload();
 				})
 				.catch(function(error) {
 					console.log(error.response);
 				});
 		}
-		
 	}
 }
 
