@@ -20,18 +20,11 @@ class Auth {
 		if (!accessToken && refreshToken) {
 			axios
 				.post('http://localhost:8888/refresh', {
-					withCredentials: true,
-					'phone':789456
-					// credentials: 'include'
+					withCredentials: true
 				})
 				.then(function(res) {
 					console.log(res.data);
-					const { accessToken } = res.data;
-
-					cookies.set('accessToken', accessToken, {
-						expires: new Date(new Date().getTime() + 30 * 1000),
-						sameSite: 'strict'
-					});
+					
 					window.location.reload();
 				})
 				.catch(function(error) {

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import styles from './styles/style.module.css';
 import axios from 'axios';
-// import { Redirect } from 'react-router-dom';
-// import Cookies from 'universal-cookie';
+
 function OtpVerify(props) {
 	axios.defaults.withCredentials = true;
-	// const cookies = new Cookies();
 
 	const [ error, setError ] = useState({
 		error: '',
@@ -27,18 +25,7 @@ function OtpVerify(props) {
 			})
 			.then(function(res) {
 				console.log(res.data);
-				// const { accessToken, refreshToken } = res.data;
-
-				// cookies.set('accessToken', accessToken, {
-				// 	expires: new Date(new Date().getTime() + 30 * 1000),
-				// 	sameSite: 'strict'
-				// });
-				// cookies.set('refreshToken', refreshToken, {
-				// 	expires: new Date(new Date().getTime() + 31557600000),
-				// 	sameSite: 'strict'
-				// });
-				// window.location.reload();
-				// setError({...error, success:res.data.msg})
+				window.location.reload();
 			})
 			.catch(function(error) {
 				console.log(error.response.data);

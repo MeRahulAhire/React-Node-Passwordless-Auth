@@ -10,9 +10,9 @@ const client = require('twilio')(accountSid, authToken);
 
 const crypto = require('crypto');
 const smsKey = process.env.SMS_SECRET_KEY;
-const twilioNum = process.env.TWILIO_PHONE_NUMBER
+const twilioNum = process.env.TWILIO_PHONE_NUMBER;
 const jwt = require('jsonwebtoken');
-const { Twilio } = require('twilio');
+
 const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
 const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN;
 let refreshTokens = [];
@@ -86,6 +86,7 @@ app.post('/verifyOTP', (req, res) => {
 });
 
 app.post('/home', authenticateUser, (req, res) => {
+	console.log('home private route');
 	res.status(202).send('Private Protected Route - Home');
 });
 
@@ -110,13 +111,14 @@ async function authenticateUser(req, res, next) {
 
 app.post('/refresh', (req, res) => {
 	const refreshToken = req.cookies.refreshToken;
+	const phone = req.body.phone;
 	if (!refreshToken) return res.status(403).send({ message: 'Refresh token not found, login again' });
 	if (!refreshTokens.includes(refreshToken))
-	return res.status(403).send({ message: 'Refresh token blocked, login again' })
+		return res.status(403).send({ message: 'Refresh token blocked, login again' });
 
 	jwt.verify(refreshToken, JWT_REFRESH_TOKEN, (err, phone) => {
 		if (!err) {
-			const accessToken = jwt.sign({ phone: phone }, JWT_AUTH_TOKEN, {
+			const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, {
 				expiresIn: '30s'
 			});
 			return res

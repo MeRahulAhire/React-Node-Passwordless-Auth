@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './styles/home.module.css';
 
 axios.defaults.withCredentials = true;
 function Home() {
-	const [ state, setstate ] = useState();
+	const [ state, setState ] = useState({
+		value: 'Private Protected Route - Home'
+	});
+
+	/*  The UseEffect below is used to verify the working of Protected Route. 
+	 Do not use it aimlessly as it will cause performance issue and server timout due to infinite execution in loop
+
 	useEffect(() => {
+		console.log(state.value)
 		axios
 			.post('http://localhost:8888/home', {
-				withCredentials: true,
+				withCredentials: true
 			})
 			.then(function(res) {
-				console.log(res.data)
-				
+				// console.log(res.data);
+				setState({ ...state, value: res.data });
 			})
 			.catch(function(error) {
 				console.log(error.response);
 			});
-	})
+	},[state]);
+	*/
 
 	const logout = () => {
 		axios
@@ -41,7 +49,7 @@ function Home() {
 				</button>
 
 				<div className={styles.card} />
-				<div className={styles.words}> Private Protected Route - Home</div>
+				<div className={styles.words}> {state.value}</div>
 			</div>
 		</div>
 	);

@@ -35,7 +35,7 @@ const StepForm = () => {
 		case 2:
             return <Otpverify nextStep={nextStep} prevStep={prevStep} handleChange={handleChange} value={value} />;
         default:
-            return <PhoneInput nextStep={nextStep} handleChange={handleChange} value={value} />;    
+            return <PhoneInput nextStep={nextStep} handleChange={handleChange} value={value} />  
             
     }
 };
