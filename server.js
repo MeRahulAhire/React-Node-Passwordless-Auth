@@ -10,8 +10,9 @@ const client = require('twilio')(accountSid, authToken);
 
 const crypto = require('crypto');
 const smsKey = process.env.SMS_SECRET_KEY;
-
+const twilioNum = process.env.TWILIO_PHONE_NUMBER
 const jwt = require('jsonwebtoken');
+const { Twilio } = require('twilio');
 const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
 const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN;
 let refreshTokens = [];
@@ -34,7 +35,7 @@ app.post('/sendOTP', (req, res) => {
 	client.messages
 		.create({
 			body: `Your One Time Login Password For CFM is ${otp}`,
-			from: '+12246555011',
+			from: twilioNum,
 			to: phone
 		})
 		.then((messages) => console.log(messages))
