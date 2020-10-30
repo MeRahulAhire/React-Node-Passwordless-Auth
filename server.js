@@ -22,7 +22,6 @@ app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 
-
 app.post('/sendOTP', (req, res) => {
 	const phone = req.body.phone;
 	const otp = Math.floor(100000 + Math.random() * 900000);
@@ -32,14 +31,14 @@ app.post('/sendOTP', (req, res) => {
 	const hash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
 	const fullHash = `${hash}.${expires}`;
 
-	// client.messages
-	// 	.create({
-	// 		body: `Your One Time Login Password For CFM is ${otp}`,
-	// 		from: '+12246555011',
-	// 		to: phone
-	// 	})
-	// 	.then((messages) => console.log(messages))
-	// 	.catch((err) => console.error(err));
+	client.messages
+		.create({
+			body: `Your One Time Login Password For CFM is ${otp}`,
+			from: '+12246555011',
+			to: phone
+		})
+		.then((messages) => console.log(messages))
+		.catch((err) => console.error(err));
 
 	res.status(200).send({ phone, hash: fullHash, otp });
 });
@@ -58,8 +57,8 @@ app.post('/verifyOTP', (req, res) => {
 	let newCalculatedHash = crypto.createHmac('sha256', smsKey).update(data).digest('hex');
 	if (newCalculatedHash === hashValue) {
 		console.log('user confirmed');
-		const accessToken = jwt.sign({data :phone}, JWT_AUTH_TOKEN, { expiresIn: '30s' });
-		const refreshToken = jwt.sign({data :phone}, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
+		const accessToken = jwt.sign({ data: phone }, JWT_AUTH_TOKEN, { expiresIn: '30s' });
+		const refreshToken = jwt.sign({ data: phone }, JWT_REFRESH_TOKEN, { expiresIn: '1y' });
 		refreshTokens.push(refreshToken);
 		res
 			.status(202)
@@ -91,9 +90,6 @@ app.post('/home', authenticateUser, (req, res) => {
 
 async function authenticateUser(req, res, next) {
 	const accessToken = req.cookies.accessToken;
-	// req.headers.authorization = `Bearer ${accessToken}`;
-	// let token = req.headers['authorization'];
-	// token = token.split(' ')[1];
 
 	jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
 		if (phone) {
