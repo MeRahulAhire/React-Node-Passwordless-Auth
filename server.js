@@ -110,10 +110,9 @@ async function authenticateUser(req, res, next) {
 
 app.post('/refresh', (req, res) => {
 	const refreshToken = req.cookies.refreshToken;
-	// const phone = req.body.phone
 	if (!refreshToken) return res.status(403).send({ message: 'Refresh token not found, login again' });
-	// if (!refreshTokens.includes(refreshToken))
-	// return res.status(403).send({ message: 'Refresh token blocked, login again' })
+	if (!refreshTokens.includes(refreshToken))
+	return res.status(403).send({ message: 'Refresh token blocked, login again' })
 
 	jwt.verify(refreshToken, JWT_REFRESH_TOKEN, (err, phone) => {
 		if (!err) {
